@@ -1,0 +1,6 @@
+requests
+Flask
+psycopg2-binary
+python-dotenv
+celery
+redis

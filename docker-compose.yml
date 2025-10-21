@@ -1,0 +1,61 @@
+
+services:
+  webhook:
+    build:
+      context: .
+    container_name: webhook
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+    restart: always
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+    depends_on:
+      - redis
+
+  worker:
+    build:
+      context: .
+    container_name: trader-worker
+    env_file:
+      - trade_track/.env
+    command: celery -A trade_track.tasks worker --loglevel=info
+    volumes:
+      - .:/app
+    restart: always
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+    depends_on:
+      - redis
+      - webhook
+
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    restart: always
+
+  n8n:
+    image: n8nio/n8n:1.112.6
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=admin
+      - N8N_BASIC_AUTH_PASSWORD=siphiwe
+      - DB_TYPE=sqlite
+    volumes:
+      - ./n8n_data:/home/node/.n8n
+    restart: always
+    depends_on:
+      - webhook
+
+  mongo:
+    image: mongo
+    restart: always
+    volumes:
+      - ./mongo_data:/data/db
+    ports:
+      - "27017:27017"
