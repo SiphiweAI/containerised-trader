@@ -4,7 +4,7 @@ import sys
 from typing import Optional
 
 def validate_env_vars():
-    required_vars = ["DB_HOST", "DB_NAME", "DB_USER", "DB_PASSWORD", "API_KEY", "CELERY_BROKER_URL"]
+    required_vars = ["DB_HOST", "DB_NAME", "DB_USER", "DB_PASSWORD", "twelvedataAPI_KEY", "CELERY_BROKER_URL"]
     missing = [var for var in required_vars if not os.getenv(var)]
     if missing:
         print(f"Missing environment variables: {', '.join(missing)}", file=sys.stderr)
