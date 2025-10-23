@@ -1,7 +1,11 @@
-# Cloud Trader 
+# Cloud Trader
 
-A lightweight Flask + Celery microservice for tracking and evaluating trades received from webhook alerts.  
-Trades are parsed, delayed, evaluated against real market data from [Twelve Data](https://twelvedata.com/), and stored in PostgreSQL.
+[![CI](https://github.com/siphiweai/containerised-trader/actions/workflows/ci.yml/badge.svg)](https://github.com/siphiweai/containerised-trader/actions/workflows/ci.yml)
+[![Fly.io Deploy](https://img.shields.io/badge/Deployed-Fly.io-blue)](https://fly.io/)
+[![GitHub release](https://img.shields.io/github/v/release/siphiweai/containerised-trader?include_prereleases)](https://github.com/siphiweai/containerised-trader/releases)
+[![Docker](https://img.shields.io/badge/Image-GitHub%20Packages-green)](https://github.com/siphiweai?tab=packages)
+
+A containerized trading automation environment that integrates **n8n**, **PostgreSQL**, and **Python microservices** on **Fly.io** for automated trade processing and analytics.
 
 ---
 
