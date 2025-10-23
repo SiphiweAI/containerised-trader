@@ -14,7 +14,7 @@ def fetch_candles(symbol: str, period: list[str], outputsize: int = 5) -> list[d
     """
     Fetch the last `outputsize` candlesticks for a given symbol and interval.
     """
-    apikey = os.getenv("API_KEY")
+    apikey = os.getenv("twelvedataAPI_KEY")
     if not apikey:
         raise ValueError("API_KEY not set in environment variables")
 

@@ -1,6 +1,7 @@
 from flask import request, jsonify
 from flask import Flask
 import logging
+import os
 from tasks import process_trade
 from dotenv import load_dotenv
 from log_config import setup_logging
@@ -15,7 +16,8 @@ setup_logging()
 app = Flask(__name__)
 limiter = Limiter(app, key_func=get_remote_address)
 
-load_dotenv()
+if os.path.exists('.env'):
+    load_dotenv()
 
 @app.route('/webhook', methods=['POST'])
 @limiter.limit("10 per minute") 

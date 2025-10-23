@@ -1,6 +1,5 @@
 from dotenv import load_dotenv
 import os
-import psycopg2
 from psycopg2 import pool
 from datetime import datetime
 import logging
