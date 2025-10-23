@@ -1,18 +1,3 @@
-# import logging
-# import sys
-
-# def setup_logging():
-#     handler = logging.StreamHandler(sys.stdout)
-#     handler.setFormatter(logging.Formatter(
-#         '%(asctime)s - %(levelname)s - %(message)s'
-#     ))
-
-#     logging.basicConfig(
-#         level=logging.INFO,       
-#         handlers=[handler]
-#     )
-
-
 import logging
 from logging.config import dictConfig
 
