@@ -1,6 +1,6 @@
 from celery import Celery
 import logging
-from load import load_trade_data
+from .load import load_trade_data
 from helper_funcs import fetch_candles, evaluate_trade
 import os
 
