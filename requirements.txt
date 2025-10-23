@@ -5,3 +5,4 @@ python-dotenv
 celery
 redis
 pytest
+flask_limiter
