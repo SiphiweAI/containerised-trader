@@ -4,7 +4,7 @@ import sys
 from typing import Optional
 
 def validate_env_vars():
-    required_vars = ["DB_HOST", "DB_NAME", "DB_USER", "DB_PASSWORD", "twelvedataAPI_KEY", "CELERY_BROKER_URL"]
+    required_vars = ["DB_HOST", "DB_NAME", "DB_USER", "DB_PASSWORD", "TWELVEDATAAPI_KEY", "CELERY_BROKER_URL"]
     missing = [var for var in required_vars if not os.getenv(var)]
     if missing:
         print(f"Missing environment variables: {', '.join(missing)}", file=sys.stderr)
@@ -14,7 +14,7 @@ def fetch_candles(symbol: str, period: list[str], outputsize: int = 5) -> list[d
     """
     Fetch the last `outputsize` candlesticks for a given symbol and interval.
     """
-    apikey = os.getenv("twelvedataAPI_KEY")
+    apikey = os.getenv("TWELVEDATAAPI_KEY")
     if not apikey:
         raise ValueError("API_KEY not set in environment variables")
 
