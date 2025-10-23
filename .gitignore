@@ -1,3 +1,5 @@
 trade_track/.env
 *.pyc 
 __pycache__/
+n8n_data/
+.vscode/
