@@ -2,10 +2,10 @@ from flask import request, jsonify
 from flask import Flask
 import logging
 import os
-from tasks import process_trade
 from dotenv import load_dotenv
-from log_config import setup_logging
-from helper_funcs import validate_env_vars
+from .tasks import process_trade
+from .log_config import setup_logging
+from .helper_funcs import validate_env_vars
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 
