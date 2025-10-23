@@ -1,1 +1,3 @@
 trade_track/.env
+*.pyc 
+__pycache__/

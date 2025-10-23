@@ -1,10 +1,20 @@
 from dotenv import load_dotenv
 import os
 import psycopg2
+from psycopg2 import pool
 from datetime import datetime
 import logging
 
 logger = logging.getLogger(__name__)
+
+db_pool = pool.SimpleConnectionPool(
+    1, 20,  # min and max connections
+    host=os.getenv("DB_HOST"),
+    dbname=os.getenv("DB_NAME"),
+    user=os.getenv("DB_USER"),
+    password=os.getenv("DB_PASSWORD"),
+    port=os.getenv("DB_PORT", 5432)
+)
 
 def load_trade_data(parsed):
     """
@@ -22,29 +32,26 @@ def load_trade_data(parsed):
     """
     
     # connect to PostgreSQL
-    conn = psycopg2.connect(
-        host=os.getenv("DB_HOST"),
-        dbname=os.getenv("DB_NAME"),
-        user=os.getenv("DB_USER"),
-        password=os.getenv("DB_PASSWORD"),
-        port=os.getenv("DB_PORT", 5432)
-    )
+    conn = conn = db_pool.getconn()
 
     conn.autocommit = True
 
-    with conn.cursor() as cur:
-        cur.execute(
-            """
-            INSERT INTO trades (time, pair, verdict, entry_price, pnl)
-            VALUES (%s, %s, %s, %s, %s)
-            """,
-            (
-                datetime.utcnow(),
-                parsed.get("Pair"),
-                parsed.get("Verdict"),
-                float(parsed.get("Entry Price", 0) or 0),
-                float(parsed.get("PnL", 0) or 0),
+    try:
+          with conn.cursor() as cur:
+            cur.execute(
+                """
+                INSERT INTO trades (time, pair, verdict, entry_price, pnl)
+                VALUES (%s, %s, %s, %s, %s)
+                """,
+                (
+                    datetime.utcnow(),
+                    parsed.get("Pair"),
+                    parsed.get("Verdict"),
+                    float(parsed.get("Entry Price", 0) or 0),
+                    float(parsed.get("PnL", 0) or 0),
+                )
             )
-        )
-    conn.close()
-    logger.info("✅ Trade inserted successfully.")
+            conn.commit()
+            logger.info("✅ Trade inserted successfully.")
+    finally:
+        db_pool.putconn(conn)

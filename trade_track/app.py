@@ -4,14 +4,21 @@ import logging
 from tasks import process_trade
 from dotenv import load_dotenv
 from log_config import setup_logging
+from helper_funcs import validate_env_vars
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
+
+validate_env_vars()
 
 setup_logging()
 
 app = Flask(__name__)
+limiter = Limiter(app, key_func=get_remote_address)
 
 load_dotenv()
 
 @app.route('/webhook', methods=['POST'])
+@limiter.limit("10 per minute") 
 def webhook():
     try:
         payload = request.get_json(force=True)
@@ -51,6 +58,10 @@ def webhook():
     except Exception as e:
         logging.exception("Webhook error")
         return jsonify({'error': str(e)}), 500
+    
+@app.route('/health', methods=['GET'])
+def health():
+    return 'OK', 200
 
 if __name__ == "__main__": 
     app.run(host="0.0.0.0", port=5000)

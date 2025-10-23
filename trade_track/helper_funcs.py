@@ -1,6 +1,14 @@
 import requests
 import os
+import sys
 from typing import Optional
+
+def validate_env_vars():
+    required_vars = ["DB_HOST", "DB_NAME", "DB_USER", "DB_PASSWORD", "API_KEY", "CELERY_BROKER_URL"]
+    missing = [var for var in required_vars if not os.getenv(var)]
+    if missing:
+        print(f"Missing environment variables: {', '.join(missing)}", file=sys.stderr)
+        sys.exit(1)
 
 def fetch_candles(symbol: str, period: list[str], outputsize: int = 5) -> list[dict[str, str]]:
     """
