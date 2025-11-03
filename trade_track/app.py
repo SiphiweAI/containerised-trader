@@ -7,15 +7,12 @@ from trade_track.helper_funcs import validate_env_vars
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 
-# Validate required environment variables (works for both local and production)
 if "PYTEST_CURRENT_TEST" not in os.environ:
     validate_env_vars()
 
-# Setup logging
 setup_logging()
 logging.getLogger('werkzeug').setLevel(logging.WARNING)
 
-# Initialize Flask
 app = Flask(__name__)
 limiter = Limiter(app, key_func=get_remote_address)
 
@@ -57,7 +54,6 @@ def webhook():
 
         logging.info(f"Parsed webhook data: {parsed}")
 
-        # Delay task execution for 5 minutes
         process_trade.apply_async((parsed,), countdown=300)
 
         return jsonify({"status": "queued", "parsed_data": parsed}), 200
@@ -70,6 +66,5 @@ def webhook():
 def health():
     return "OK", 200
 
-# Only for local development
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.getenv("PORT", 5000)), debug=True)
