@@ -77,11 +77,11 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ghcr.io/siphiweai:latest .
+          docker build -t ghcr.io/siphiweai/containerised-trader:latest .
 
       - name: Push Docker image to GHCR
         run: |
-          docker push ghcr.io/siphiweai:latest
+          docker push ghcr.io/siphiweai/containerised-trader:latest
 
   # --- Deploy to Fly.io ---
   deploy:
@@ -99,4 +99,4 @@ jobs:
         run: fly auth token ${{ secrets.FLY_API_TOKEN }}
 
       - name: Deploy to Fly
-        run: fly deploy --remote-only --image ghcr.io/siphiweai:latest
+        run: fly deploy --remote-only --image ghcr.io/siphiweai/containerised-trader:latest
