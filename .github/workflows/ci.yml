@@ -7,14 +7,13 @@ on:
     branches: [main]
 
 env:
-  # Required secrets
   API_KEY: ${{ secrets.API_KEY }}
   DB_HOST: ${{ secrets.DB_HOST }}
   DB_NAME: ${{ secrets.DB_NAME }}
   DB_USER: ${{ secrets.DB_USER }}
   DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
   CELERY_BROKER_URL: ${{ secrets.CELERY_BROKER_URL }}
-  FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }} # Fly.io API token
+  FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }} 
 
 jobs:
   # --- Unit + Integration tests ---
@@ -78,11 +77,11 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ghcr.io/${{ github.repository }}:latest .
+          docker build -t ghcr.io/siphiweai:latest .
 
       - name: Push Docker image to GHCR
         run: |
-          docker push ghcr.io/${{ github.repository }}:latest
+          docker push ghcr.io/siphiweai:latest
 
   # --- Deploy to Fly.io ---
   deploy:
@@ -100,4 +99,4 @@ jobs:
         run: fly auth token ${{ secrets.FLY_API_TOKEN }}
 
       - name: Deploy to Fly
-        run: fly deploy --remote-only --image ghcr.io/${{ github.repository }}:latest
+        run: fly deploy --remote-only --image ghcr.io/siphiweai:latest
