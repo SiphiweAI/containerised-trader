@@ -5,11 +5,7 @@ def test_health(client):
 
 def test_add_trade(client):
     trade_data = {
-        'Pair': 'EUR/USD',
-        'Verdict': 'Win',
-        'Entry Price': '1.0845',
-        'Stop-Loss': '1.0800',
-        'PnL': 25.3
+        'data': 'Pair: EUR/USD\nVerdict: Win\nEntry Price: 1.0845\nStop-Loss: 1.0800\nTarget/Exit Price: 1.0900'
     }
     response = client.post('/webhook', json=trade_data)
     assert response.status_code == 200
