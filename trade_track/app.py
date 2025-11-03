@@ -7,8 +7,8 @@ from trade_track.helper_funcs import validate_env_vars
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 
-if "PYTEST_CURRENT_TEST" not in os.environ:
-    validate_env_vars()
+# if "PYTEST_CURRENT_TEST" not in os.environ:
+#     validate_env_vars()
 
 setup_logging()
 logging.getLogger('werkzeug').setLevel(logging.WARNING)
@@ -67,4 +67,5 @@ def health():
     return "OK", 200
 
 if __name__ == "__main__":
+    validate_env_vars()
     app.run(host="0.0.0.0", port=int(os.getenv("PORT", 5000)), debug=True)
