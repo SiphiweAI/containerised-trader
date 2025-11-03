@@ -1,7 +1,7 @@
 from celery import Celery
 import logging
-from load import load_trade_data
-from helper_funcs import fetch_candles, evaluate_trade
+from trade_track.load import load_trade_data
+from trade_track.helper_funcs import fetch_candles, evaluate_trade
 import os
 
 celery = Celery('trade_track.tasks', broker=os.getenv('CELERY_BROKER_URL', 'redis://localhost:6379/0'))
