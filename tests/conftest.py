@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import patch
-from trade_track import app
+from trade_track.app import app
 
 @pytest.fixture
 def client():
