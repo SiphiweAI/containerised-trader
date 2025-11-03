@@ -29,5 +29,5 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: ghcr.io/${{ github.repository_owner && github.repository_owner | lower }}/containerised-trader:latest
-
+          tags: ghcr.io/siphiweai/containerised-trader:latest
+          # tags: ghcr.io/${{ github.repository_owner }}/containerised-trader:latest
