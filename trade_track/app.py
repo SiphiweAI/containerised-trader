@@ -8,7 +8,8 @@ from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 
 # Validate required environment variables (works for both local and production)
-validate_env_vars()
+if "PYTEST_CURRENT_TEST" not in os.environ:
+    validate_env_vars()
 
 # Setup logging
 setup_logging()
