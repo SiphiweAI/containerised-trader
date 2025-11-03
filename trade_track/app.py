@@ -14,7 +14,8 @@ setup_logging()
 logging.getLogger('werkzeug').setLevel(logging.WARNING)
 
 app = Flask(__name__)
-limiter = Limiter(app, key_func=get_remote_address)
+limiter = Limiter(key_func=get_remote_address)
+limiter.init_app(app)
 
 # Load .env only in local development
 if os.getenv("FLASK_ENV") == "development" and os.path.exists(".env"):
