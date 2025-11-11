@@ -1,0 +1,9 @@
+{
+  "name": "Cloud Trader",
+  "description": "Containerized trading automation environment integrating Flask, Celery, Redis, PostgreSQL, and Fly.io.",
+  "stack": ["Python", "Flask", "Celery", "Redis", "PostgreSQL", "Fly.io"],
+  "status": "Running",
+  "repo": "https://github.com/siphiweai/containerised-trader",
+  "deployment": "Fly.io",
+  "docs": ""
+}
